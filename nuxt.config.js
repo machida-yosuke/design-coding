@@ -1,5 +1,4 @@
 const pkg = require('./package')
-
 module.exports = {
   mode: 'universal',
 
@@ -15,6 +14,7 @@ module.exports = {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
+  // genarateディレクトリの変更
   generate: {
     dir: 'docs'
   },
