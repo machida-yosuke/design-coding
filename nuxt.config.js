@@ -14,7 +14,6 @@ module.exports = {
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Open+Sans' }
     ],
     script: [
-      { src: 'https://cdnjs.cloudflare.com/ajax/libs/three.js/101/three.min.js' }
     ]
   },
   // genarateディレクトリの変更

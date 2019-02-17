@@ -1,14 +1,11 @@
 <template lang="pug">
   .top
     .introduction
-      canvas(ref='introductionCanvas')
+      canvas.introduction-canvas(ref='introductionCanvas')
       .introduction-scroll
-        .introduction-scroll__scroll scroll
+        .introduction-scroll__scroll SCROLL
         .line-wrap
-          .line-wrap__line
-          .line-wrap__line
-          .line-wrap__line
-          .line-wrap__line
+          .line-wrap__line(v-for='n,index in 4' :data-num='index')
     .about
       .about-wrap
         .about-logo
@@ -25,11 +22,13 @@
 </template>
 
 <script>
-import ThreeBase from '../assets/js/ThreeBase'
+import IntroductionDemo from '../assets/js/introduction/IntroductionDemo'
 export default {
   mounted() {
-    const introductionCanvas = new ThreeBase({ canvas: this.$refs.introductionCanvas })
-    console.log(introductionCanvas)
+    const introductionCanvas = new IntroductionDemo({
+      canvas: this.$refs.introductionCanvas
+    })
+    introductionCanvas.start()
   }
 }
 </script>
@@ -43,7 +42,13 @@ export default {
   height: auto;
   min-height: 100vh;
   position: relative;
-  background: red;
+  &-canvas{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
   &-scroll{
     position: absolute;
     bottom: 20px;
@@ -51,8 +56,9 @@ export default {
     left: 50%;
     &__scroll{
       font-family: 'Open Sans', sans-serif;
-      font-size: 16px;
+      font-size: 10px;
       color: #fff;
+      text-align: center;
       letter-spacing: 1px;
       margin-bottom: 10px;
     }
@@ -61,16 +67,32 @@ export default {
 
 .line-wrap{
   display: flex;
-  width: 40px;
+  width: 20px;
   justify-content: space-between;
   margin:  0 auto;
-  &__line{
-      height: 60px;
+
+  @for $i from 0 through 4 {
+      &__line[data-num="#{$i}"]{
+      height: 20px;
       width: 1px;
-      background: #fff;
       display: inline-block;
       overflow: hidden;
+      position: relative;
+      &::before{
+        content: "";
+        position: absolute;
+        left: 0;
+        background: #fff;
+        top: 0;
+        width: 100%;
+        height: 100%;
+
+        animation: scroll-line 1s linear infinite;
+        animation-delay: $i * 100ms;
+        transform-origin: center top;
+      }
     }
+  }
 }
 
 .about{
