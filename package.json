@@ -5,10 +5,11 @@
   "author": "machida",
   "private": true,
   "scripts": {
+    "sheet": "node tool/sheetloder.js",
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate",
+    "gene": "yarn sheet && nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "precommit": "npm run lint"
   },
@@ -16,6 +17,7 @@
     "cross-env": "^5.2.0",
     "nuxt": "^2.3.4",
     "reset.css": "^2.0.2",
+    "sheet-loader": "^2.1.0",
     "style-loader": "^0.23.1",
     "terser": "^3.14.1",
     "three": "^0.101.1"
@@ -34,7 +36,7 @@
     "eslint-plugin-promise": ">=4.0.1",
     "eslint-plugin-standard": ">=4.0.0",
     "eslint-plugin-vue": "^5.0.0",
-    "gsap": "^2.0.2",
+    "gsap": "^2.1.1",
     "node-sass": "^4.11.0",
     "nodemon": "^1.18.9",
     "pug": "^2.0.3",

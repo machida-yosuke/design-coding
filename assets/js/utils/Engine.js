@@ -1,25 +1,32 @@
-import * as THREE from 'three'
+import {
+  WebGLRenderer,
+  Scene,
+  PerspectiveCamera
+} from 'three'
+import { TweenMax } from 'gsap'
+
+TweenMax.lagSmoothing(1000, 20)
 export default class Engine {
   constructor(opts) {
     this.canvas = opts
     this.width = this.canvas.offsetWidth
     this.height = this.canvas.offsetHeight
-    this.canvas.addEventListener('resize', this.resize)
-    this.canvas.addEventListener('orientationchange', this.resize)
     this.update = this.update.bind(this)
     this.resize = this.resize.bind(this)
+    window.addEventListener('resize', this.resize)
+    window.addEventListener('orientationchange', this.resize)
     this.init()
     this.resize()
   }
 
   init() {
     this.devicePixelRatio = window.devicePixelRatio ? Math.min(1.6, window.devicePixelRatio) : 1
-    this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, canvas: this.canvas })
+    this.renderer = new WebGLRenderer({ antialias: true, alpha: true, canvas: this.canvas })
     this.renderer.setPixelRatio(this.devicePixelRatio)
     this.renderer.setClearColor(0x000000, 1)
     this.renderer.setSize(this.width, this.height)
-    this.scene = new THREE.Scene()
-    this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 1, 2000)
+    this.scene = new Scene()
+    this.camera = new PerspectiveCamera(45, this.width / this.height, 0.1, 100)
     this.camera.position.set(0, 0, 10)
   }
 
@@ -39,12 +46,18 @@ export default class Engine {
 
   update() {
     this.render()
-    requestAnimationFrame(this.update)
+    TweenMax.ticker.addEventListener('tick', this.update)
+  }
+
+  destroy() {
+    TweenMax.ticker.removeEventListener('tick', this.render)
   }
 
   resize() {
+    console.log(this.canvas)
     this.width = this.canvas.offsetWidth
     this.height = this.canvas.offsetHeight
+    console.log('resize', this.width, this.height)
     this.camera.aspect = this.width / this.height
     this.camera.updateProjectionMatrix()
     this.renderer.setSize(this.width, this.height)

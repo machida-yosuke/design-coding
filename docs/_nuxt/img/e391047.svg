@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="70" height="70" viewBox="0 0 70 70">
+  <defs>
+    <clipPath id="clip-path">
+      <circle id="楕円形_1" data-name="楕円形 1" cx="32.5" cy="32.5" r="32.5"/>
+    </clipPath>
+  </defs>
+  <g id="シンボル_1_1" data-name="シンボル 1 – 1" transform="translate(-925 -1193)">
+    <circle id="楕円形_2" data-name="楕円形 2" cx="35" cy="35" r="35" transform="translate(925 1193)" fill="#fff"/>
+    <g id="グループ化_6" data-name="グループ化 6" transform="translate(928 1196)">
+      <g id="マスクグループ_5" data-name="マスクグループ 5" clip-path="url(#clip-path)">
+        <g id="グループ化_4" data-name="グループ化 4" transform="translate(-8.161 0)">
+          <path id="パス_1" data-name="パス 1" d="M21.606,0H.445l-13,65H8.606Z" transform="translate(12.555 0)"/>
+          <path id="パス_2" data-name="パス 2" d="M66,0H53L40,65H53Z" transform="translate(-5.839 0)"/>
+          <path id="パス_3" data-name="パス 3" d="M20,0H33L46,65H33Z" transform="translate(1.161 0)"/>
+          <path id="パス_4" data-name="パス 4" d="M40,82.5H53L46.5,50Z" transform="translate(-5.839 -17.5)"/>
+          <path id="パス_5" data-name="パス 5" d="M33,0H20l6.5,32.5Z" transform="translate(1.161 0)"/>
+          <path id="パス_6" data-name="パス 6" d="M60,0H80.936l13,65H73Z" transform="translate(-12.839 0)"/>
+          <path id="パス_7" data-name="パス 7" d="M73,0H60l6.5,32.5Z" transform="translate(-12.839 0)"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
