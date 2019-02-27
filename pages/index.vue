@@ -22,7 +22,6 @@
       canvas.skech-wrap-index(
         v-for='data,index in skechData'
         :data-index-num='index'
-        :style="{ backgroundImage: `url(/sketch/${data.ogp}.png)`}"
         )
 </template>
 
