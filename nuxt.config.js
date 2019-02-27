@@ -1,4 +1,10 @@
 const pkg = require('./package')
+const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES'
+  ? {
+    base: '/design-coding/'
+  }
+  : {}
+
 module.exports = {
   mode: 'universal',
   head: {
@@ -46,8 +52,9 @@ module.exports = {
   modules: [],
 
   router: {
-    base: 'https://machida-yosuke.github.io/design-coding/'
+    ...routerBase
   },
+
   /*
    ** Build configuration
    */

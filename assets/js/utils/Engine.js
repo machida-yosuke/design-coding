@@ -23,7 +23,7 @@ export default class Engine {
     window.addEventListener('resize', this.resize)
     window.addEventListener('orientationchange', this.resize)
     this.devicePixelRatio = window.devicePixelRatio ? Math.min(1.6, window.devicePixelRatio) : 1
-    this.devicePixelRatio = 0.5
+    this.devicePixelRatio = 1
     this.renderer = new WebGLRenderer({ antialias: true, alpha: true, canvas: this.canvas })
     this.renderer.setPixelRatio(this.devicePixelRatio)
     this.renderer.setClearColor(0x000000, 1)
