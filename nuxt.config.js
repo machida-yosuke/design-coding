@@ -45,6 +45,9 @@ module.exports = {
    */
   modules: [],
 
+  router: {
+    base: 'https://machida-yosuke.github.io/design-coding/'
+  },
   /*
    ** Build configuration
    */
