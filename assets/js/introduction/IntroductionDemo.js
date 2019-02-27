@@ -53,8 +53,8 @@ export default class IntroductionDemo extends Engine {
   createBox() {
     const geomConf = {
       width: 2,
-      height: 0.1,
-      depth: 0.1,
+      height: 0.05,
+      depth: 0.05,
       widthSegments: 2,
       heightSegments: 2,
       depthSegments: 2
@@ -62,9 +62,12 @@ export default class IntroductionDemo extends Engine {
     const matConf = {
       color: 0x8195a6
     }
-    const box = new Primitive('box', 'meshLambertMaterial', { geomConf, matConf, isReceiveShadow: false, isCastShadow: true })
-    box.position.set(0, -1, 1)
-    this.add(box)
+
+    for (let index = 0; index < 10; index++) {
+      const box = new Primitive('box', 'meshLambertMaterial', { geomConf, matConf, isReceiveShadow: false, isCastShadow: true })
+      box.position.set(-4, -2 + (index * 0.1), 0.2 + (index * 0.1))
+      this.add(box)
+    }
   }
 
   createFloor() {
