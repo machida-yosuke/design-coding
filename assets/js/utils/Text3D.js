@@ -1,6 +1,5 @@
 import {
   Object3D,
-  // ShapeGeometry,
   MeshBasicMaterial,
   MeshStandardMaterial,
   MeshLambertMaterial,

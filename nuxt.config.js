@@ -49,7 +49,11 @@ module.exports = {
   /*
    ** Nuxt.js modules
    */
-  modules: [],
+  modules: [
+    ['@nuxtjs/google-analytics', {
+      id: 'paste your id here'
+    }]
+  ],
 
   router: {
     ...routerBase

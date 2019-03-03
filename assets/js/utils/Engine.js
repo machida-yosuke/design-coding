@@ -9,12 +9,15 @@ import { TweenMax } from 'gsap'
 import setOrbitControls from './setOrbitControls'
 
 TweenMax.lagSmoothing(1000, 20)
-TweenMax.ticker.fps(30)
+
 export default class Engine {
   constructor(canvas, {
     isOrbitControls = true,
-    cameraType = 'perspectiveCamera'
+    cameraType = 'perspectiveCamera',
+    fps = 60
   }) {
+    TweenMax.ticker.fps(fps)
+    this.cameraType = cameraType
     this.canvas = canvas
     this.width = this.canvas.offsetWidth
     this.height = this.canvas.offsetHeight
@@ -23,7 +26,7 @@ export default class Engine {
     window.addEventListener('resize', this.resize)
     window.addEventListener('orientationchange', this.resize)
     this.devicePixelRatio = window.devicePixelRatio ? Math.min(1.6, window.devicePixelRatio) : 1
-    this.devicePixelRatio = 1
+    this.devicePixelRatio = 0.5
     this.renderer = new WebGLRenderer({ antialias: true, alpha: true, canvas: this.canvas })
     this.renderer.setPixelRatio(this.devicePixelRatio)
     this.renderer.setClearColor(0x000000, 1)
@@ -31,14 +34,14 @@ export default class Engine {
     this.renderer.shadowMap.enabled = true
     this.renderer.shadowMap.type = 1
     this.scene = new Scene()
-    this.camera(cameraType)
+    this.camera()
     this.orbitControl(isOrbitControls)
     this.resize()
   }
 
-  camera(cameraType) {
-    if (cameraType === 'perspectiveCamera') this.camera = new PerspectiveCamera(45, this.width / this.height, 0.1, 100)
-    if (cameraType === 'orthographicCamera') this.camera = new OrthographicCamera(-this.width * 0.0025, this.width * 0.0025, this.height * 0.0025, -this.height * 0.0025, 0.001, 1000)
+  camera() {
+    if (this.cameraType === 'perspectiveCamera') this.camera = new PerspectiveCamera(45, this.width / this.height, 0.1, 100)
+    if (this.cameraType === 'orthographicCamera') this.camera = new OrthographicCamera(-this.width * 0.0025, this.width * 0.0025, this.height * 0.0025, -this.height * 0.0025, 0.001, 1000)
     this.camera.position.set(0, 0, 10)
     this.camera.lookAt(new Vector3(0, 0, 0))
   }
@@ -59,7 +62,6 @@ export default class Engine {
 
   render() {
     this.controls.update()
-    console.log('qq')
     this.renderer.render(this.scene, this.camera)
   }
 
@@ -75,13 +77,18 @@ export default class Engine {
   resize() {
     this.width = this.canvas.offsetWidth
     this.height = this.canvas.offsetHeight
-    // this.camera.aspect = this.width / this.height
-    this.camera.left = -this.width * 0.0025
-    this.camera.right = this.width * 0.0025
-    this.camera.top = this.height * 0.0025
-    this.camera.bottom = -this.height * 0.0025
 
-    this.camera.updateProjectionMatrix()
+    if (this.cameraType === 'perspectiveCamera') {
+      this.camera.aspect = this.width / this.height
+    }
+
+    if (this.cameraType === 'orthographicCamera') {
+      this.camera.left = -this.width * 0.0025
+      this.camera.right = this.width * 0.0025
+      this.camera.top = this.height * 0.0025
+      this.camera.bottom = -this.height * 0.0025
+    }
     this.renderer.setSize(this.width, this.height)
+    this.camera.updateProjectionMatrix()
   }
 }

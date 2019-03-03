@@ -6,18 +6,29 @@ import {
   MeshLambertMaterial,
   PlaneGeometry,
   BoxGeometry,
-  SphereGeometry
+  SphereGeometry,
+  ConeGeometry
 } from 'three'
 
 let geom
 let mat
 export default class Primitive extends Object3D {
-  constructor(geometryType, materialType, { geomConf, matConf, isReceiveShadow, isCastShadow }) {
+  constructor(
+    geometryType,
+    materialType,
+    {
+      geomConf,
+      matConf,
+      isReceiveShadow = false,
+      isCastShadow = false
+    }
+  ) {
     super()
     this.setGeometry(geometryType, geomConf)
     this.setMaterial(materialType, matConf)
 
     const mesh = new Mesh(geom, mat)
+    mesh.nameId = geometryType
     mesh.position.set(0, 0, 0)
     mesh.receiveShadow = isReceiveShadow
     mesh.castShadow = isCastShadow
@@ -34,10 +45,15 @@ export default class Primitive extends Object3D {
         // BoxGeometry(width : Float, height : Float, depth : Float, widthSegments : Integer, heightSegments : Integer, depthSegments : Integer)
         geom = new BoxGeometry(geomConf.width, geomConf.height, geomConf.depth, geomConf.widthSegments, geomConf.heightSegments, geomConf.depthSegments)
         break
-      case 'Sphere':
+      case 'sphere':
         // SphereGeometry(radius : Float, widthSegments : Integer, heightSegments : Integer, phiStart : Float, phiLength : Float, thetaStart : Float, thetaLength : Float)
         geom = new SphereGeometry(geomConf.radius, geomConf.widthSegments, geomConf.heightSegments)
         break
+      case 'cone':
+        // ConeGeometry(radius : Float, height : Float, radialSegments : Integer, heightSegments : Integer, openEnded : Boolean, thetaStart : Float, thetaLength : Float)
+        geom = new ConeGeometry(geomConf.height, geomConf.radialSegments, geomConf.heightSegments)
+        break
+
       default:
         break
     }
@@ -51,6 +67,7 @@ export default class Primitive extends Object3D {
         mat = new MeshStandardMaterial(matConf)
         break
       case 'meshLambertMaterial':
+        console.log(matConf)
         mat = new MeshLambertMaterial(matConf)
         break
       default:
