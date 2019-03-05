@@ -28,10 +28,20 @@
 <script>
 import IntroductionDemo from '../assets/js/introduction/IntroductionDemo'
 import skechData from '../assets/json/DesignCoding.json'
+import Meta from '~/assets/mixins/meta'
+
 export default {
+  mixins: [Meta],
   data() {
     return {
-      skechData: skechData
+      skechData: skechData,
+      meta: {
+        title: 'DesignCoding',
+        description: 'ページ個別のディスクリプション',
+        type: 'article',
+        url: 'https://example.com/test',
+        image: 'https://example.com/img/ogp/test.jpg'
+      }
     }
   },
   mounted() {
@@ -52,7 +62,9 @@ export default {
   top: 0;
   left: 0;
   width: 100vw;
-  min-height: 100vh;
+  min-width: 1000px;
+  height: 100vh;
+  min-height: 500px;
   position: relative;
   &-canvas{
     position: absolute;

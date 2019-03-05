@@ -14,10 +14,12 @@ export default class Engine {
   constructor(canvas, {
     isOrbitControls = true,
     cameraType = 'perspectiveCamera',
+    orthographicCameraSize = 0.0025,
     fps = 60
   }) {
     TweenMax.ticker.fps(fps)
     this.cameraType = cameraType
+    this.orthographicCameraSize = orthographicCameraSize
     this.canvas = canvas
     this.width = this.canvas.offsetWidth
     this.height = this.canvas.offsetHeight
@@ -26,7 +28,7 @@ export default class Engine {
     window.addEventListener('resize', this.resize)
     window.addEventListener('orientationchange', this.resize)
     this.devicePixelRatio = window.devicePixelRatio ? Math.min(1.6, window.devicePixelRatio) : 1
-    this.devicePixelRatio = 0.5
+    this.devicePixelRatio = 1
     this.renderer = new WebGLRenderer({ antialias: true, alpha: true, canvas: this.canvas })
     this.renderer.setPixelRatio(this.devicePixelRatio)
     this.renderer.setClearColor(0x000000, 1)
@@ -41,7 +43,7 @@ export default class Engine {
 
   camera() {
     if (this.cameraType === 'perspectiveCamera') this.camera = new PerspectiveCamera(45, this.width / this.height, 0.1, 100)
-    if (this.cameraType === 'orthographicCamera') this.camera = new OrthographicCamera(-this.width * 0.0025, this.width * 0.0025, this.height * 0.0025, -this.height * 0.0025, 0.001, 1000)
+    if (this.cameraType === 'orthographicCamera') this.camera = new OrthographicCamera(-this.width * this.orthographicCameraSize, this.width * this.orthographicCameraSize, this.height * this.orthographicCameraSize, -this.height * this.orthographicCameraSize, 0.001, 1000)
     this.camera.position.set(0, 0, 10)
     this.camera.lookAt(new Vector3(0, 0, 0))
   }
@@ -83,10 +85,10 @@ export default class Engine {
     }
 
     if (this.cameraType === 'orthographicCamera') {
-      this.camera.left = -this.width * 0.0025
-      this.camera.right = this.width * 0.0025
-      this.camera.top = this.height * 0.0025
-      this.camera.bottom = -this.height * 0.0025
+      this.camera.left = -this.width * this.orthographicCameraSize
+      this.camera.right = this.width * this.orthographicCameraSize
+      this.camera.top = this.height * this.orthographicCameraSize
+      this.camera.bottom = -this.height * this.orthographicCameraSize
     }
     this.renderer.setSize(this.width, this.height)
     this.camera.updateProjectionMatrix()

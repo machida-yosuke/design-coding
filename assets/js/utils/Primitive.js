@@ -7,7 +7,11 @@ import {
   PlaneGeometry,
   BoxGeometry,
   SphereGeometry,
-  ConeGeometry
+  ConeGeometry,
+  CylinderGeometry,
+  TorusGeometry,
+  CircleGeometry,
+  TubeGeometry
 } from 'three'
 
 let geom
@@ -53,7 +57,22 @@ export default class Primitive extends Object3D {
         // ConeGeometry(radius : Float, height : Float, radialSegments : Integer, heightSegments : Integer, openEnded : Boolean, thetaStart : Float, thetaLength : Float)
         geom = new ConeGeometry(geomConf.height, geomConf.radialSegments, geomConf.heightSegments)
         break
-
+      case 'cylinder':
+        // CylinderBufferGeometry(radiusTop : Float, radiusBottom : Float, height : Float, radialSegments : Integer, heightSegments : Integer, openEnded : Boolean, thetaStart : Float, thetaLength : Float)
+        geom = new CylinderGeometry(geomConf.radiusTop, geomConf.radiusBottom, geomConf.height, geomConf.radialSegments)
+        break
+      case 'torus':
+        // TorusGeometry(radius : Float, tube : Float, radialSegments : Integer, tubularSegments : Integer, arc : Float)
+        geom = new TorusGeometry(geomConf.radius, geomConf.tube, geomConf.radialSegments, geomConf.tubularSegments, geomConf.arc)
+        break
+      case 'circle':
+        // CircleGeometry(radius : Float, segments : Integer, thetaStart : Float, thetaLength : Float)
+        geom = new CircleGeometry(geomConf.radius, geomConf.segments, geomConf.thetaStart, geomConf.thetaLength)
+        break
+      case 'tube':
+        // TubeBufferGeometry(path : Curve, tubularSegments : Integer, radius : Float, radialSegments : Integer, closed : Boolean)
+        geom = new TubeGeometry(geomConf.path, geomConf.tubularSegments, geomConf.radius, geomConf.radialSegments, geomConf.closed)
+        break
       default:
         break
     }
@@ -67,7 +86,6 @@ export default class Primitive extends Object3D {
         mat = new MeshStandardMaterial(matConf)
         break
       case 'meshLambertMaterial':
-        console.log(matConf)
         mat = new MeshLambertMaterial(matConf)
         break
       default:
