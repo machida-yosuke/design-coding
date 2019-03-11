@@ -1,6 +1,7 @@
 # design-coding
 
 > My groundbreaking Nuxt.js project
+https://machida-yosuke.github.io/design-coding/
 
 ## Build Setup
 
