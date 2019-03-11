@@ -133,8 +133,8 @@ export default class IntroductionDemo extends Engine {
 
   createHexagon() {
     const geomConf = {
-      radiusTop: 0.8,
-      radiusBottom: 0.8,
+      radiusTop: 1.0,
+      radiusBottom: 1.0,
       height: 0.1,
       radialSegments: 6
     }
@@ -229,7 +229,7 @@ export default class IntroductionDemo extends Engine {
         isCastShadow: true
       }
     )
-    this.cone.position.set(5.5, -1, 0.6)
+    this.cone.position.set(5.5, 1, 1.0)
     this.cone.scale.y = 1.8
     const tl = new TimelineMax()
     tl.to(this.cone.position, 25, { z: 1, repeat: -1, yoyo: true, ease: Power0.easeNone })
@@ -241,7 +241,7 @@ export default class IntroductionDemo extends Engine {
     const geomConf = {
       width: 2,
       height: 2,
-      depth: 0.5,
+      depth: 0.1,
       widthSegments: 2,
       heightSegments: 2,
       depthSegments: 2
@@ -264,8 +264,8 @@ export default class IntroductionDemo extends Engine {
 
   createTriangular() {
     const geomConf = {
-      radiusTop: 1,
-      radiusBottom: 1,
+      radiusTop: 1.8,
+      radiusBottom: 1.8,
       height: 0.3,
       radialSegments: 3
     }

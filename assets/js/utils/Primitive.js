@@ -4,6 +4,7 @@ import {
   MeshBasicMaterial,
   MeshStandardMaterial,
   MeshLambertMaterial,
+  Material,
   PlaneGeometry,
   BoxGeometry,
   SphereGeometry,
@@ -16,6 +17,8 @@ import {
 
 let geom
 let mat
+console.log(Material.side)
+
 export default class Primitive extends Object3D {
   constructor(
     geometryType,
@@ -87,6 +90,7 @@ export default class Primitive extends Object3D {
         break
       case 'meshLambertMaterial':
         mat = new MeshLambertMaterial(matConf)
+        // mat.side = 2
         break
       default:
         break
