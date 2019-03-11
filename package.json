@@ -13,11 +13,12 @@
     "generate:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt generate",
     "deploy:gh-pages": "gh-pages -d dist -t",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "precommit": "npm run lint"
+    "precommit": "npm run lint",
+    "build:w-gh-pages": "cross-env DEPLOY_ENV=GH_PAGES nuxt build",
+    "generate:w-gh-pages": "cross-env DEPLOY_ENV=GH_PAGES nuxt generate"
   },
   "dependencies": {
     "@nuxtjs/google-analytics": "^2.1.0",
-    "cross-env": "^5.2.0",
     "nuxt": "^2.3.4",
     "reset.css": "^2.0.2",
     "sheet-loader": "^2.1.0",
@@ -29,6 +30,7 @@
     "@nuxtjs/eslint-config": "^0.0.1",
     "@nuxtjs/style-resources": "^0.1.2",
     "babel-eslint": "^8.2.1",
+    "cross-env": "^5.2.0",
     "eslint": "^5.0.1",
     "eslint-config-standard": ">=12.0.0",
     "eslint-import-resolver-webpack": "^0.11.0",

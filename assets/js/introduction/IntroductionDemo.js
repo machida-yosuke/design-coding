@@ -229,7 +229,7 @@ export default class IntroductionDemo extends Engine {
         isCastShadow: true
       }
     )
-    this.cone.position.set(5.5, 1, 1.0)
+    this.cone.position.set(5.5, -1.3, 1.0)
     this.cone.scale.y = 1.8
     const tl = new TimelineMax()
     tl.to(this.cone.position, 25, { z: 1, repeat: -1, yoyo: true, ease: Power0.easeNone })
@@ -282,7 +282,7 @@ export default class IntroductionDemo extends Engine {
       }
     )
 
-    circle.position.set(7.7, 2.5, 1.5)
+    circle.position.set(7.8, 2.7, 1.0)
     circle.rotation.x = calcDegtoRad(40)
     circle.rotation.z = calcDegtoRad(90)
     TweenMax.to(circle.position, 25, { z: 1, repeat: -1, yoyo: true, ease: Power0.easeNone })
