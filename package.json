@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "sheet": "node tool/sheetloder.js",
+    "devHttps": "node server/index.js",
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
@@ -22,6 +23,7 @@
     "nuxt": "^2.3.4",
     "reset.css": "^2.0.2",
     "sheet-loader": "^2.1.0",
+    "songle-api": "^1.1.2",
     "style-loader": "^0.23.1",
     "terser": "^3.14.1",
     "three": "^0.101.1"
