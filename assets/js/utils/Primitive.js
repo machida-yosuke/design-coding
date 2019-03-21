@@ -4,7 +4,6 @@ import {
   MeshBasicMaterial,
   MeshStandardMaterial,
   MeshLambertMaterial,
-  Material,
   PlaneGeometry,
   BoxGeometry,
   SphereGeometry,
@@ -18,7 +17,6 @@ import {
 
 let geom
 let mat
-console.log(Material.side)
 
 export default class Primitive extends Object3D {
   constructor(
