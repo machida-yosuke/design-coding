@@ -21,6 +21,7 @@
   "dependencies": {
     "@nuxtjs/google-analytics": "^2.1.0",
     "nuxt": "^2.3.4",
+    "nuxt-user-agent": "^1.0.2",
     "reset.css": "^2.0.2",
     "sheet-loader": "^2.1.0",
     "songle-api": "^1.1.2",
@@ -46,6 +47,7 @@
     "gsap": "^2.1.1",
     "node-sass": "^4.11.0",
     "nodemon": "^1.18.9",
+    "nuxt-sass-resources-loader": "^2.0.5",
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",
     "sass-loader": "^7.1.0",

@@ -1,8 +1,13 @@
+import {
+  TweenMax
+} from 'gsap'
 import token from './songleSyncConfig'
 const url = 'https://www.youtube.com/watch?v=LIlZCmETvsY'
 class SongleSync {
   constructor() {
     this.chord = ''
+    this.beatDom = document.querySelector('.beat')
+    this.beatDomWidth = this.beatDom.offsetWidth
   }
 
   setApi() {
@@ -24,24 +29,34 @@ class SongleSync {
       this.player.secretToken = token.secretToken // secretTokenをセットするとmasterになる
       // 再生するメディアをセット
       this.player.useMedia(url)
+      this.player.addPlugin(new this.SW.Plugin.SongleWidget({ element: '.songle-widget' }))
     } else {
       // slaveの場合
-      this.player = new this.SW.Player()
+      this.player = new this.SW.Player({
+        mediaElement: '#songle' // プレイヤーを埋め込むDOMを指定
+      })
       this.player.accessToken = token.accessToken
+      this.player.useMedia(url)
     }
 
-    this.player.addPlugin(new this.SW.Plugin.SongleWidget({
-      responsive: true,
-      showController: false,
-      showOriginalSiteLink: false,
-      showMusicMap: false,
-      showSongleJpSiteLink: false
-    }))
+    // 何かあったらコンソールに書き出す
+    this.player.on('play', (ev) => {
+      console.log('play')
+    })
+    // this.player.on('mediaStateChange', ev => console.log('mediaStateChange', ev))
+    this.player.on('seek', ev => console.log('seek'))
 
-    // slaveを同期させるプラグインを設定
+    this.player.on('pause', (ev) => {
+      console.log('pause')
+    })
+
+    this.player.on('finish', (ev) => {
+      console.log('finish')
+      this.player.seekTo(0)
+    })
+
     this.player.addPlugin(new this.SW.Plugin.SongleSync())
 
-    // 利用するイベントのプラグインを設定
     this.player.addPlugin(new this.SW.Plugin.Beat())
     this.player.addPlugin(new this.SW.Plugin.Chorus())
     this.player.addPlugin(new this.SW.Plugin.Chord())
@@ -56,51 +71,45 @@ class SongleSync {
       // mediaReadyで動画が準備完了したら実行
       this.player.on('mediaReady', () => {
         // プレイヤー操作ボタン設定
-        // this.setPlayerCtrl()
+        console.log('mediaReady')
+        this.player.stop()
         setTimeout(() => {
-          // this.player.play()
           this.player.stop()
-          console.log(this.player.musicMap)
-          console.log(this.player)
-        }, 1000)
+          this.player.play()
+          this.player.seekTo(0)
+        }, 2000)
       })
     }
   }
 
-  // プレイヤー操作ボタン設定
-  setPlayerCtrl() {
-    // // 再生
-    // $('#widget_ctrl .play').click(function () {
-    //   player.play()
-    // })
-    // // 停止
-    // $('#widget_ctrl .pause').click(function () {
-    //   player.pause()
-    // })
-    // // 先頭
-    // $('#widget_ctrl .head').click(function () {
-    //   player.seekTo(0)
-    // })
-    // // サビ出し
-    // $('#widget_ctrl .seekto_chorus').click(function () {
-    //   player.seekToNextChorusSectionItem()
-    // })
-    // $('#widget_ctrl').css({ display: 'table' })
-    // $('.memo').show()
-  }
-
-  // ビートでタイルの色を変える（cssで指定）
   setBeatEvent() {
-    // player.on('beatEnter', function (e) {
-    //   for (let i = 1; i <= 4; i++) {
-    //     li = $('#beats li.b' + i)
-    //     if (e.data.beat.position == i) {
-    //       li.addClass('current')
-    //     } else {
-    //       li.removeClass('current')
-    //     }
-    //   }
-    // })
+    this.player.on('beatEnter', (e) => {
+      switch (e.data.beat.position) {
+        case 1:
+          // You can write code for the 1st beat ...
+          console.log('1nd beat')
+          this.tweenBeat(e.data.beat.position)
+          break
+
+        case 2:
+          // You can write code for the 2nd beat ...
+          console.log('2nd beat')
+          this.tweenBeat(e.data.beat.position)
+          break
+
+        case 3:
+          // You can write code for the 3rd beat ...
+          console.log('3rd beat')
+          this.tweenBeat(e.data.beat.position)
+          break
+
+        case 4:
+          // You can write code for the 4th beat ...
+          console.log('4th beat')
+          this.tweenBeat(e.data.beat.position)
+          break
+      }
+    })
   }
 
   // コード左上に表示する
@@ -114,16 +123,21 @@ class SongleSync {
     })
   }
 
-  // サビはビートの色を変更(cssで指定)し、右上に「サビ」と表示させる
   setChorusEvent() {
-    // player.on('chorusSectionEnter', function (e) {
-    //   $('#beats').addClass('chorus')
-    //   $('#chorus_alert').show()
-    // })
-    // player.on('chorusSectionLeave', function (e) {
-    //   $('#beats').removeClass('chorus')
-    //   $('#chorus_alert').hide()
-    // })
+    this.player.on('chorusSectionEnter', (e) => {
+      console.log(e)
+    })
+    this.player.on('chorusSectionLeave', (e) => {
+      console.log(e)
+    })
+  }
+
+  tweenBeat(position) {
+    this.beatDomWidth = this.beatDom.offsetWidth
+    TweenMax.set(
+      this.beatDom,
+      { x: (position - 1) * this.beatDomWidth }
+    )
   }
 
   getUrlVars() {
@@ -144,9 +158,11 @@ class SongleSync {
     }
     return vars
   }
-
   destroy() {
-    console.log('消した')
+    this.player.seekTo(0)
+    this.player.stop()
+    this.SW = null
+    this.player = null
   }
 }
 

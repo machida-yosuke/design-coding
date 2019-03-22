@@ -53,9 +53,7 @@ export default {
   }
 }
 </script>
-
 <style lang="scss">
-@import "../assets/sass/utile.scss";
 .introduction{
   top: 0;
   left: 0;
