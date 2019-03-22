@@ -20,6 +20,7 @@ module.exports = {
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Open+Sans:300,400,800' }
     ],
     script: [
+      { src: 'https://api.songle.jp/v2/api.js' }
     ]
   },
   // genarateディレクトリの変更
@@ -52,9 +53,18 @@ module.exports = {
   modules: [
     ['@nuxtjs/google-analytics', {
       id: 'UA-135482273-1'
-    }]
+    }],
+    ['@nuxtjs/style-resources'],
+    'nuxt-user-agent'
   ],
-
+  styleResources: {
+    scss: [
+      '@/assets/sass/_variable.scss',
+      '@/assets/sass/_function.scss',
+      '@/assets/sass/_mixin.scss',
+      '@/assets/sass/_keyframe.scss'
+    ]
+  },
   router: {
     ...routerBase
   },
