@@ -45,7 +45,9 @@ export default class IntroductionDemo extends Engine {
     this.createCone()
     this.createBox()
     this.createCircleTube()
-    this.createTube()
+    this.createTubeRight()
+    this.createTubeLeft()
+    this.createRing()
     this.createTriangular()
     this.createLight()
     this.camera.position.x = 10
@@ -229,7 +231,7 @@ export default class IntroductionDemo extends Engine {
         isCastShadow: true
       }
     )
-    this.cone.position.set(5.5, -1.3, 1.0)
+    this.cone.position.set(5, -1.3, 1.0)
     this.cone.scale.y = 1.8
     const tl = new TimelineMax()
     tl.to(this.cone.position, 25, { z: 1, repeat: -1, yoyo: true, ease: Power0.easeNone })
@@ -322,7 +324,7 @@ export default class IntroductionDemo extends Engine {
     this.add(tube)
   }
 
-  createTube() {
+  createTubeLeft() {
     const numPoints = 100
     const start = new Vector3(-4, 2, 2)
     const middle = new Vector3(0, -1, 10)
@@ -351,6 +353,57 @@ export default class IntroductionDemo extends Engine {
     this.add(tube)
   }
 
+  createTubeRight() {
+    const numPoints = 50
+    const start = new Vector3(4.8, 3, 0.5)
+    const middle = new Vector3(8.8, 2, 1.5)
+    const end = new Vector3(4.5, -4, 0.5)
+    const curveQuad = new QuadraticBezierCurve3(start, middle, end)
+
+    const geomConf = {
+      path: curveQuad,
+      tubularSegments: numPoints,
+      radius: 0.03,
+      radialSegments: 32,
+      closed: false
+    }
+    const matConf = {
+      color: COLORS.beige
+    }
+    const tube = new Primitive(
+      'tube',
+      'meshLambertMaterial',
+      {
+        geomConf,
+        matConf,
+        isCastShadow: true
+      }
+    )
+    this.add(tube)
+  }
+  createRing() {
+    const geomConf = {
+      innerRadius: 0.1,
+      outerRadius: 0.8,
+      thetaSegments: 50,
+      phiSegments: 50
+    }
+    const matConf = {
+      color: COLORS.green
+    }
+    const ring = new Primitive(
+      'ring',
+      'meshLambertMaterial',
+      {
+        geomConf,
+        matConf,
+        isCastShadow: true
+      }
+    )
+    ring.position.set(6.7, 0.5, 1)
+    ring.rotation.x = calcDegtoRad(30)
+    this.add(ring)
+  }
   createText() {
     const depth = 0.25
     const text3D = new Text3D('Design Coding', 'meshLambertMaterial', {

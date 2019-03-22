@@ -4,7 +4,6 @@ import {
   MeshBasicMaterial,
   MeshStandardMaterial,
   MeshLambertMaterial,
-  Material,
   PlaneGeometry,
   BoxGeometry,
   SphereGeometry,
@@ -12,12 +11,12 @@ import {
   CylinderGeometry,
   TorusGeometry,
   CircleGeometry,
-  TubeGeometry
+  TubeGeometry,
+  RingGeometry
 } from 'three'
 
 let geom
 let mat
-console.log(Material.side)
 
 export default class Primitive extends Object3D {
   constructor(
@@ -76,6 +75,10 @@ export default class Primitive extends Object3D {
         // TubeBufferGeometry(path : Curve, tubularSegments : Integer, radius : Float, radialSegments : Integer, closed : Boolean)
         geom = new TubeGeometry(geomConf.path, geomConf.tubularSegments, geomConf.radius, geomConf.radialSegments, geomConf.closed)
         break
+      case 'ring':
+        // RingGeometry(innerRadius : Float, outerRadius : Float, thetaSegments : Integer, phiSegments : Integer, thetaStart : Float, thetaLength : Float)
+        geom = new RingGeometry(geomConf.innerRadius, geomConf.outerRadius, geomConf.thetaSegments, geomConf.phiSegments)
+        break
       default:
         break
     }
@@ -90,7 +93,7 @@ export default class Primitive extends Object3D {
         break
       case 'meshLambertMaterial':
         mat = new MeshLambertMaterial(matConf)
-        // mat.side = 2
+        mat.side = 2
         break
       default:
         break

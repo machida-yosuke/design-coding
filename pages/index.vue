@@ -1,7 +1,8 @@
 <template lang="pug">
   .top
     .introduction
-      canvas.introduction-canvas(ref='introductionCanvas')
+      .sketch
+        canvas.sketch-canvas(ref='sketchCanvas')
       .introduction-scroll
         .introduction-scroll__scroll SCROLL
         .line-wrap
@@ -19,15 +20,12 @@
           a.about-sns__twitter(href="https://twitter.com/machida_yousuke?lang=ja")
           a.about-sns__github(href="https://github.com/machida-yosuke")
     .skech-wrap
-      canvas.skech-wrap-index(
-        v-for='data,index in skechData'
-        :data-index-num='index'
-        )
+      canvas.skech-wrap-index(v-for='data,index in skechData' :data-index-num='index')
 </template>
 
 <script>
-import IntroductionDemo from '../assets/js/introduction/IntroductionDemo'
-import skechData from '../assets/json/DesignCoding.json'
+import IntroductionDemo from '~/assets/js/introduction/IntroductionDemo'
+import skechData from '~/assets/json/DesignCoding.json'
 import Meta from '~/assets/mixins/meta'
 
 export default {
@@ -37,21 +35,21 @@ export default {
       skechData: skechData,
       meta: {
         title: 'DesignCoding',
-        description: 'ページ個別のディスクリプション',
+        description: 'DesignCoding is a creative challenge. My aim is to attempt to creative coding.',
         type: 'article',
-        url: 'https://example.com/test',
-        image: 'https://example.com/img/ogp/test.jpg'
+        url: 'https://machida-yosuke.github.io/design-coding/',
+        image: 'https://machida-yosuke.github.io/design-coding/img/ogp/ogp.png'
       }
     }
   },
   mounted() {
-    this.introductionCanvas = new IntroductionDemo({
-      canvas: this.$refs.introductionCanvas
+    this.sketch = new IntroductionDemo({
+      canvas: this.$refs.sketchCanvas
     })
-    this.introductionCanvas.start()
+    this.sketch.start()
   },
   beforeDestroy() {
-    this.introductionCanvas.destroy()
+    this.sketch.destroy()
   }
 }
 </script>
@@ -66,12 +64,21 @@ export default {
   height: 100vh;
   min-height: 500px;
   position: relative;
-  &-canvas{
-    position: absolute;
-    width: 100% !important;
-    height: 100% !important;
+  .sketch{
     top: 0;
     left: 0;
+    width: 100vw;
+    min-width: 1000px;
+    height: 100vh;
+    min-height: 500px;
+    position: relative;
+    &-canvas{
+      position: absolute;
+      width: 100% !important;
+      height: 100% !important;
+      top: 0;
+      left: 0;
+    }
   }
   &-scroll{
     position: absolute;
