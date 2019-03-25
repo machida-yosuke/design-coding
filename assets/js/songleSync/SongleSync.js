@@ -1,13 +1,57 @@
-import {
-  TweenMax
-} from 'gsap'
+import EventEmitter from 'events'
 import token from './songleSyncConfig'
 const url = 'https://www.youtube.com/watch?v=LIlZCmETvsY'
-class SongleSync {
+class SongleSync extends EventEmitter {
   constructor() {
+    super()
     this.chord = ''
-    this.beatDom = document.querySelector('.beat')
-    this.beatDomWidth = this.beatDom.offsetWidth
+    this.onBeatEnter = (e) => {
+      switch (e.data.beat.position) {
+        case 1:
+          this.emit('beat', 1)
+          break
+        case 2:
+          this.emit('beat', 2)
+          break
+        case 3:
+          this.emit('beat', 3)
+          break
+        case 4:
+          this.emit('beat', 4)
+          break
+      }
+    }
+
+    this.onPlay = (e) => {
+      console.log('play')
+    }
+    this.onSeek = (e) => {
+      console.log(e, 'seek')
+    }
+    this.onPause = (e) => {
+      console.log('pause')
+    }
+    this.onFinish = (e) => {
+      this.player.seekTo(0)
+    }
+
+    this.onChordEnter = (e) => {
+      if (e.data.chord.name !== 'N') {
+        this.chord = e.data.chord.name
+        this.emit('chord', this.chord)
+      } else {
+        this.chord = ''
+      }
+    }
+
+    this.onChorusSectionEnter = (e) => {
+      console.log(e, 'サビ開始')
+      this.emit('chorus', 'enter')
+    }
+    this.onChorusSectionLeave = (e) => {
+      console.log(e, 'サビ終わり')
+      this.emit('chorus', 'leave')
+    }
   }
 
   setApi() {
@@ -23,7 +67,7 @@ class SongleSync {
     if (this.getUrlVars().master === '1') {
       // masterの場合 (引数 master=1)
       this.player = new this.SW.Player({
-        mediaElement: '#songle' // プレイヤーを埋め込むDOMを指定
+        mediaElement: '#songle'
       })
       this.player.accessToken = token.accessToken
       this.player.secretToken = token.secretToken // secretTokenをセットするとmasterになる
@@ -33,111 +77,50 @@ class SongleSync {
     } else {
       // slaveの場合
       this.player = new this.SW.Player({
-        mediaElement: '#songle' // プレイヤーを埋め込むDOMを指定
+        mediaElement: '#songle'
       })
       this.player.accessToken = token.accessToken
       this.player.useMedia(url)
     }
-
     // 何かあったらコンソールに書き出す
-    this.player.on('play', (ev) => {
-      console.log('play')
-    })
-    // this.player.on('mediaStateChange', ev => console.log('mediaStateChange', ev))
-    this.player.on('seek', ev => console.log('seek'))
-
-    this.player.on('pause', (ev) => {
-      console.log('pause')
-    })
-
-    this.player.on('finish', (ev) => {
-      console.log('finish')
-      this.player.seekTo(0)
-    })
+    this.player.on('play', this.onPlay)
+    this.player.on('seek', this.onSeek)
+    this.player.on('pause', this.onPause)
+    this.player.on('finish', this.onFinish)
 
     this.player.addPlugin(new this.SW.Plugin.SongleSync())
-
     this.player.addPlugin(new this.SW.Plugin.Beat())
     this.player.addPlugin(new this.SW.Plugin.Chorus())
     this.player.addPlugin(new this.SW.Plugin.Chord())
 
-    // 各イベントに対応するアクションを設定
     this.setBeatEvent()
     this.setChordEvent()
     this.setChorusEvent()
 
-    // masterの場合は動画を再生
-    if (this.getUrlVars().master === '1') {
-      // mediaReadyで動画が準備完了したら実行
-      this.player.on('mediaReady', () => {
-        // プレイヤー操作ボタン設定
-        console.log('mediaReady')
+    this.onMediaReady = () => {
+      console.log('mediaReady')
+      this.player.stop()
+      setTimeout(() => {
         this.player.stop()
-        setTimeout(() => {
-          this.player.stop()
-          this.player.play()
-          this.player.seekTo(0)
-        }, 2000)
-      })
+        this.player.play()
+        this.player.seekTo(0)
+        this.emit('play')
+      }, 2000)
     }
+    this.player.on('mediaReady', this.onMediaReady)
   }
 
   setBeatEvent() {
-    this.player.on('beatEnter', (e) => {
-      switch (e.data.beat.position) {
-        case 1:
-          // You can write code for the 1st beat ...
-          console.log('1nd beat')
-          this.tweenBeat(e.data.beat.position)
-          break
-
-        case 2:
-          // You can write code for the 2nd beat ...
-          console.log('2nd beat')
-          this.tweenBeat(e.data.beat.position)
-          break
-
-        case 3:
-          // You can write code for the 3rd beat ...
-          console.log('3rd beat')
-          this.tweenBeat(e.data.beat.position)
-          break
-
-        case 4:
-          // You can write code for the 4th beat ...
-          console.log('4th beat')
-          this.tweenBeat(e.data.beat.position)
-          break
-      }
-    })
+    this.player.on('beatEnter', this.onBeatEnter)
   }
 
-  // コード左上に表示する
   setChordEvent() {
-    this.player.on('chordEnter', (e) => {
-      if (e.data.chord.name !== 'N') {
-        this.chord = e.data.chord.name
-      } else {
-        this.chord = ''
-      }
-    })
+    this.player.on('chordEnter', this.onChordEnter)
   }
 
   setChorusEvent() {
-    this.player.on('chorusSectionEnter', (e) => {
-      console.log(e)
-    })
-    this.player.on('chorusSectionLeave', (e) => {
-      console.log(e)
-    })
-  }
-
-  tweenBeat(position) {
-    this.beatDomWidth = this.beatDom.offsetWidth
-    TweenMax.set(
-      this.beatDom,
-      { x: (position - 1) * this.beatDomWidth }
-    )
+    this.player.on('chorusSectionEnter', this.onChorusSectionEnter)
+    this.player.on('chorusSectionLeave', this.onChorusSectionLeave)
   }
 
   getUrlVars() {
@@ -159,7 +142,15 @@ class SongleSync {
     return vars
   }
   destroy() {
-    this.player.seekTo(0)
+    // this.player.removeListener('play', this.onPlay)
+    // this.player.removeListener('seek', this.onSeek)
+    // this.player.removeListener('pause', this.onPause)
+    // this.player.removeListener('finish', this.onFinish)
+    // this.player.removeListener('mediaReady', this.onMediaReady)
+    // this.player.removeListener('beatEnter', this.onBeatEnter)
+    // this.player.removeListener('chordEnter', this.onChordEnter)
+    // this.player.removeListener('chorusSectionEnter', this.onChorusSectionEnter)
+    // this.player.removeListener('chorusSectionLeave', this.onChorusSectionLeave)
     this.player.stop()
     this.SW = null
     this.player = null

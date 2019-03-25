@@ -3,17 +3,19 @@
     .songle-wrap(:data-ua='deviceType')
       #songle
     .beat
+    .dot
+    .sketch(:data-ua='deviceType')
+      canvas.sketch-canvas(ref='sketchCanvas')
     .tap(v-if='deviceType == "smartphone"' ref='tap')
     .songle-widget(v-if='deviceType == "pc"')
     .access(v-if='deviceType == "pc"')
       .access-qr
-      .access-description
-        | 本ページから動画を再生した後、
-        | スマホでアクセスすると画面が、シンクロしています。
+      .access-description 本ページから動画を再生した後、スマホでアクセスすると画面が、シンクロしています。
 </template>
 
 <script>
 import Meta from '~/assets/mixins/meta'
+import SongleSyncCanvas from '~/assets/js/songleSync/SongleSyncCanvas'
 import SongleSync from '~/assets/js/songleSync/SongleSync'
 export default {
   mixins: [Meta],
@@ -24,7 +26,7 @@ export default {
         title: 'DesignCoding | SongleSync',
         description: 'SongleSync is a creative challenge. My aim is to attempt to creative coding.',
         type: 'article',
-        url: 'https://machida-yosuke.github.io/design-coding/SongleSync',
+        url: 'https://machida-yosuke.github.io/design-coding/SongleSync/',
         image: 'https://machida-yosuke.github.io/img/ogp/SongleSync/ogp.png'
       }
     }
@@ -32,16 +34,39 @@ export default {
   created() {
     const deviceType = this.$ua.deviceType()
     this.deviceType = deviceType
+    console.log(this.deviceType)
   },
   mounted() {
-    console.log(this.deviceType)
+    this.beat = (e) => {
+      console.log(e, 'beat')
+      this.sketch.tweenBeat(e)
+    }
+    this.chorus = (e) => {
+      console.log(e)
+    }
+    this.chord = (e) => {
+      console.log(e, 'chord')
+    }
     this.songleSync = new SongleSync()
     this.songleSync.setApi()
+    this.songleSync.on('play', this.createSongleSyncCanvas)
+    this.songleSync.on('beat', this.beat)
+    this.songleSync.on('chorus', this.chorus)
+    this.songleSync.on('chord', this.chord)
   },
-  beforeDestroy() {
+  destroyed() {
+    this.songleSync.removeListener('play', this.createSongleSyncCanvas)
+    this.songleSync.removeListener('beat', this.beat)
+    this.songleSync.removeListener('chorus', this.chorus)
+    this.songleSync.removeListener('chord', this.chord)
     this.songleSync.destroy()
   },
-  methods: {}
+  methods: {
+    createSongleSyncCanvas() {
+      this.sketch = new SongleSyncCanvas({ canvas: this.$refs.sketchCanvas })
+      this.sketch.start()
+    }
+  }
 }
 </script>
 
@@ -80,13 +105,41 @@ export default {
   width: 100%;
   height: 100%;
 }
+.sketch{
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  &[data-ua='pc']{
+    min-width: 1000px;
+    min-height: 500px;
+  }
+  &-canvas{
+    position: absolute;
+    width: 100% !important;
+    height: 100% !important;
+    top: 0;
+    left: 0;
+    opacity: 0.9;
+  }
+}
 
 .beat{
+  pointer-events: none;
   position: absolute;
   top: 0;
   width: 25vw;
   height: 100%;
-  background: red;
+}
+.dot{
+  position:absolute;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle farthest-side, #FF6B6B 40%, transparent 40%, transparent 100%), radial-gradient(circle farthest-side, #4ECDC4 25%, #C7F464 25%, #C7F464 40%, transparent 40%, transparent 100%);
+  background-size: 50px 50px, 50px 50px;
+  background-position: 0 0, 25px 25px;
 }
 .access{
   position: absolute;

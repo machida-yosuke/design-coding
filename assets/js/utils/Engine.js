@@ -31,7 +31,7 @@ export default class Engine {
     this.devicePixelRatio = 1
     this.renderer = new WebGLRenderer({ antialias: true, alpha: true, canvas: this.canvas })
     this.renderer.setPixelRatio(this.devicePixelRatio)
-    this.renderer.setClearColor(0x000000, 1)
+    this.renderer.setClearColor(0x000000, 0)
     this.renderer.setSize(this.width, this.height)
     this.renderer.shadowMap.enabled = true
     this.renderer.shadowMap.type = 1

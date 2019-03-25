@@ -11,12 +11,12 @@ import {
   QuadraticBezierCurve3
 } from 'three'
 
-import Engine from '../utils/Engine'
-import Text3D from '../utils/Text3D'
-import Primitive from '../utils/Primitive'
-import Light from '../utils/Light'
-import calcDegtoRad from '../utils/calcDegtoRad'
-import getRandomFloat from '../utils/getRandomFloat'
+import Engine from '~/assets/js/utils/Engine'
+import Text3D from '~/assets/js/utils/Text3D'
+import Primitive from '~/assets/js/utils/Primitive'
+import Light from '~/assets/js/utils/Light'
+import calcDegtoRad from '~/assets/js/utils/calcDegtoRad'
+import getRandomFloat from '~/assets/js/utils/getRandomFloat'
 const COLORS = {
   pink: 0xf099aa,
   blue: 0x99c0f0,
@@ -294,24 +294,17 @@ export default class IntroductionDemo extends Engine {
   }
 
   createCircleTube() {
-    const numPoints = 100
-    const start = new Vector3(0, 0, 1)
-    const middle = new Vector3(0, 0, 1)
-    const end = new Vector3(0, 0, 1)
-    const curveQuad = new QuadraticBezierCurve3(start, middle, end)
-
     const geomConf = {
-      path: curveQuad,
-      tubularSegments: numPoints,
-      radius: 0.7,
-      radialSegments: 32,
-      closed: false
+      innerRadius: 0.001,
+      outerRadius: 0.6,
+      thetaSegments: 50,
+      phiSegments: 50
     }
     const matConf = {
       color: COLORS.red
     }
-    const tube = new Primitive(
-      'tube',
+    const circle = new Primitive(
+      'ring',
       'meshLambertMaterial',
       {
         geomConf,
@@ -319,11 +312,10 @@ export default class IntroductionDemo extends Engine {
         isCastShadow: true
       }
     )
-    tube.rotation.y = calcDegtoRad(10)
-    tube.position.set(1, -1, 0)
-    this.add(tube)
+    circle.rotation.y = calcDegtoRad(10)
+    circle.position.set(1, -1, 1)
+    this.add(circle)
   }
-
   createTubeLeft() {
     const numPoints = 100
     const start = new Vector3(-4, 2, 2)
@@ -355,9 +347,9 @@ export default class IntroductionDemo extends Engine {
 
   createTubeRight() {
     const numPoints = 50
-    const start = new Vector3(4.8, 3, 0.5)
-    const middle = new Vector3(8.8, 2, 1.5)
-    const end = new Vector3(4.5, -4, 0.5)
+    const start = new Vector3(5, 3, 0.5)
+    const middle = new Vector3(9, 2, 1.5)
+    const end = new Vector3(4.8, -4, 0.5)
     const curveQuad = new QuadraticBezierCurve3(start, middle, end)
 
     const geomConf = {
@@ -400,7 +392,7 @@ export default class IntroductionDemo extends Engine {
         isCastShadow: true
       }
     )
-    ring.position.set(6.7, 0.5, 1)
+    ring.position.set(6.9, 0.5, 1)
     ring.rotation.x = calcDegtoRad(30)
     this.add(ring)
   }
