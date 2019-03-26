@@ -33,6 +33,7 @@ class SongleSync extends EventEmitter {
     }
     this.onFinish = (e) => {
       this.player.seekTo(0)
+      this.emit('finish')
     }
 
     this.onChordEnter = (e) => {
