@@ -27,8 +27,10 @@ const colorLen = Object.keys(COLORS).length
 export default class SongleSyncCanvas extends Engine {
   constructor(opts) {
     super(opts.canvas, {
-      isOrbitControls: true
+      isOrbitControls: true,
+      fps: 30
     })
+    this.deviceType = opts.deviceType
     this.beatDom = document.querySelector('.beat')
     this.beatDomWidth = this.beatDom.offsetWidth
     this.dotDom = document.querySelector('.dot')
@@ -36,6 +38,7 @@ export default class SongleSyncCanvas extends Engine {
     this.createTextTakara()
     this.createTextZima()
     this.createLight()
+    console.log(this.deviceType)
   }
   createTextShin() {
     this.textShinGroup = createGroup()
@@ -51,7 +54,13 @@ export default class SongleSyncCanvas extends Engine {
     })
     textShin.position.y -= textShin.size * 0.5
     textShin.position.x -= textShin.size * 0.5
-    this.textShinGroup.position.y += textShin.size
+    if (this.deviceType === 'pc') {
+      this.textShinGroup.position.x -= (textShin.size + 1.5)
+    }
+    if (this.deviceType === 'smartphone') {
+      this.textShinGroup.position.y += textShin.size
+    }
+
     this.textShinGroup.rotation.y = calcDegtoRad(10)
     this.textShinGroup.scale.set(MIN_SCALE, MIN_SCALE, MIN_SCALE)
     this.textShinGroup.add(textShin)
@@ -71,7 +80,6 @@ export default class SongleSyncCanvas extends Engine {
     })
     textTakara.position.y -= textTakara.size * 0.5
     textTakara.position.x -= textTakara.size * 0.5
-
     this.textTakaraGroup.rotation.y = calcDegtoRad(-10)
     this.textTakaraGroup.scale.set(MIN_SCALE, MIN_SCALE, MIN_SCALE)
     this.textTakaraGroup.add(textTakara)
@@ -91,8 +99,14 @@ export default class SongleSyncCanvas extends Engine {
     })
     textZima.position.y -= textZima.size * 0.5
     textZima.position.x -= textZima.size * 0.5
-    this.textZimaGroup.position.y -= textZima.size
-    this.textZimaGroup.rotation.y = calcDegtoRad(20)
+    if (this.deviceType === 'pc') {
+      this.textZimaGroup.position.x += (textZima.size + 1.5)
+    }
+    if (this.deviceType === 'smartphone') {
+      this.textZimaGroup.position.y -= textZima.size
+    }
+
+    this.textZimaGroup.rotation.y = calcDegtoRad(12)
     this.textZimaGroup.scale.set(MIN_SCALE, MIN_SCALE, MIN_SCALE)
     this.textZimaGroup.add(textZima)
     this.add(this.textZimaGroup)
@@ -131,10 +145,19 @@ export default class SongleSyncCanvas extends Engine {
       this.beatDom,
       { x: (position - 1) * this.beatDomWidth }
     )
-    if (position === 1) this.tweenText(this.textShinGroup)
-    if (position === 2) this.tweenText(this.textTakaraGroup)
-    if (position === 3) this.tweenText(this.textZimaGroup)
-    if (position === 4) this.tweenBot()
+    if (position === 1) {
+      this.tweenText(this.textShinGroup)
+    }
+    if (position === 2) {
+      this.tweenBot()
+      this.tweenText(this.textTakaraGroup)
+    }
+    if (position === 3) {
+      this.tweenText(this.textZimaGroup)
+    }
+    if (position === 4) {
+      this.tweenBot()
+    }
   }
   tweenText(text) {
     const tl = new TimelineMax({
@@ -161,9 +184,12 @@ export default class SongleSyncCanvas extends Engine {
   }
 
   tweenBot() {
-    TweenMax.to(this.dotDom, 0.4, {
-      backgroundImage: `radial-gradient(circle farthest-side, #${tohex(this.getRandomColor())} 40%, transparent 40%, transparent 100%), radial-gradient(circle farthest-side, #${tohex(this.getRandomColor())} 25%, #${tohex(this.getRandomColor())} 25%, #${tohex(this.getRandomColor())} 40%, transparent 40%, transparent 100%)`,
-      ease: Circ.easeOut
+    const random = Math.floor(getRandomFloat(0, 10)) * 10
+    TweenMax.to(this.dotDom, 0.3, {
+      backgroundImage: `radial-gradient(circle farthest-side, #${tohex(this.getRandomColor())} ${random}%, transparent 40%, transparent 100%), radial-gradient(circle farthest-side, #${tohex(this.getRandomColor())} ${random}%, #${tohex(this.getRandomColor())} 25%, #${tohex(this.getRandomColor())} 40%, transparent 40%, transparent 100%)`,
+      backgroundSize: `${random}px ${random}px, ${random}px ${random}px`,
+      backgroundPosition: `0px 0px, ${random}px ${random}px`,
+      ease: Circ.easeInOut
     })
   }
   getRandomColor() {
