@@ -1,10 +1,10 @@
 <template lang="pug">
   .songlesync
-    .songle-wrap
+    .songle-wrap(:data-ua='deviceType')
       #songle
     .beat(v-show='isShowBeat')
     .dot(v-show='isShowDot')
-    .sketch
+    .sketch(:data-ua='deviceType' v-show='isShowCanvas')
       canvas.sketch-canvas(ref='sketchCanvas')
     .songle-widget(v-if='deviceType == "pc"')
     .access(v-if='deviceType == "pc"')
