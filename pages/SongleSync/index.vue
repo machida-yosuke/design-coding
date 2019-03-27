@@ -63,6 +63,13 @@ export default {
       this.isShowDot = 0
       this.isShowCanvas = 0
     }
+
+    console.log('mounted aaa')
+    const songle = document.querySelector('#songle')
+    const songlewidget = document.querySelector('.songle-widget')
+    console.log('songle', songle)
+    console.log('songlewidget', songlewidget)
+
     this.$nextTick(() => {
       this.songleSync = new SongleSync()
       this.songleSync.setApi()
