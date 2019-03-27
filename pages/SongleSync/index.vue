@@ -33,12 +33,11 @@ export default {
       }
     }
   },
-  created() {
+  mounted() {
     const deviceType = this.$ua.deviceType()
     this.deviceType = deviceType
     console.log(this.deviceType)
-  },
-  mounted() {
+
     console.log('mounted1')
     this.beat = (e) => {
       console.log(e, 'beat')
