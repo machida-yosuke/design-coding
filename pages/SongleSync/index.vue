@@ -2,12 +2,13 @@
   .songlesync
     .songle-wrap
       #songle
-    .beat
-    .dot
+    .beat(v-show='isShowBeat')
+    .dot(v-show='isShowDot')
     .sketch
       canvas.sketch-canvas(ref='sketchCanvas')
-    .songle-widget
-    .access
+    .tap(v-if='deviceType == "smartphone"' ref='tap')
+    .songle-widget(v-if='deviceType == "pc"')
+    .access(v-if='deviceType == "pc"')
       .access-qr
       .access-description 本ページから動画を再生した後、スマホでアクセスすると画面が、シンクロしています。
 </template>
