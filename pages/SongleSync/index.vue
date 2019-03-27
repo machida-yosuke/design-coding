@@ -63,13 +63,15 @@ export default {
       this.isShowDot = 0
       this.isShowCanvas = 0
     }
-    this.songleSync = new SongleSync()
-    this.songleSync.setApi()
-    this.songleSync.on('play', this.createSongleSyncCanvas)
-    this.songleSync.on('beat', this.beat)
-    this.songleSync.on('chorus', this.chorus)
-    this.songleSync.on('chord', this.chord)
-    this.songleSync.on('finish', this.finish)
+    this.$nextTick(() => {
+      this.songleSync = new SongleSync()
+      this.songleSync.setApi()
+      this.songleSync.on('play', this.createSongleSyncCanvas)
+      this.songleSync.on('beat', this.beat)
+      this.songleSync.on('chorus', this.chorus)
+      this.songleSync.on('chord', this.chord)
+      this.songleSync.on('finish', this.finish)
+    })
   },
   destroyed() {
     this.songleSync.removeListener('play', this.createSongleSyncCanvas)
