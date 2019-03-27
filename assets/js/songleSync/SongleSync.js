@@ -67,6 +67,10 @@ class SongleSync extends EventEmitter {
   init() {
     if (this.getUrlVars().master === '1') {
       // masterの場合 (引数 master=1)
+      const songle = document.querySelector('#songle')
+      const songlewidget = document.querySelector('.songle-widget')
+      console.log('songle', songle)
+      console.log('songlewidget', songlewidget)
       this.player = new this.SW.Player({
         mediaElement: '#songle'
       })
