@@ -20,7 +20,7 @@ export default {
   mixins: [Meta],
   data() {
     return {
-      deviceType: '',
+      deviceType: 'smartphone',
       isShowBeat: 1,
       isShowDot: 0,
       isShowCanvas: 1,
@@ -37,13 +37,10 @@ export default {
     const deviceType = this.$ua.deviceType()
     this.deviceType = deviceType
     console.log(this.deviceType)
-
-    console.log('mounted1')
     this.beat = (e) => {
       console.log(e, 'beat')
       this.sketch.tweenBeat(e)
     }
-    console.log('mounted2')
     this.chorus = (e) => {
       if (e === 'enter') {
         this.isShowCanvas = 1
@@ -55,21 +52,14 @@ export default {
         this.isShowBeat = 1
       }
     }
-    console.log('mounted3')
     this.chord = (e) => {
       console.log(e, 'chord')
     }
-    console.log('mounted4')
     this.finish = () => {
       this.isShowBeat = 1
       this.isShowDot = 0
       this.isShowCanvas = 0
     }
-
-    const songle = document.querySelector('#songle')
-    const songlewidget = document.querySelector('.songle-widget')
-    console.log('songle', songle)
-    console.log('songlewidget', songlewidget)
 
     this.$nextTick(() => {
       this.songleSync = new SongleSync()
