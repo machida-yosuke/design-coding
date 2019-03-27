@@ -6,7 +6,6 @@
     .dot(v-show='isShowDot')
     .sketch
       canvas.sketch-canvas(ref='sketchCanvas')
-    .tap(v-if='deviceType == "smartphone"' ref='tap')
     .songle-widget(v-if='deviceType == "pc"')
     .access(v-if='deviceType == "pc"')
       .access-qr
