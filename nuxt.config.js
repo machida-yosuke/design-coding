@@ -11,7 +11,7 @@ module.exports = {
     title: pkg.name,
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'viewport', content: 'width=750, initial-scale=1' },
       { hid: 'description', name: 'description', content: pkg.description }
     ],
     link: [
@@ -20,7 +20,8 @@ module.exports = {
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Open+Sans:300,400,800' }
     ],
     script: [
-      { src: 'https://api.songle.jp/v2/api.js' }
+      { src: 'https://api.songle.jp/v2/api.js' },
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/oimo/1.0.9/oimo.min.js' }
     ]
   },
   // genarateディレクトリの変更
@@ -86,6 +87,15 @@ module.exports = {
           exclude: /(node_modules)/
         })
       }
+      config.module.rules.push({
+        test: /\.(fs|vs|glsl)$/,
+        use: [
+          {
+            loader: 'glsl-shader-loader',
+            options: {}
+          }
+        ]
+      })
     }
   }
 }

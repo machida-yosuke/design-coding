@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@nuxtjs/google-analytics": "^2.1.0",
+    "glsl-shader-loader": "^0.1.6",
     "nuxt": "^2.3.4",
     "nuxt-user-agent": "^1.0.2",
     "reset.css": "^2.0.2",

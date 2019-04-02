@@ -4,6 +4,7 @@ import {
   MeshBasicMaterial,
   MeshStandardMaterial,
   MeshLambertMaterial,
+  RawShaderMaterial,
   PlaneGeometry,
   BoxGeometry,
   SphereGeometry,
@@ -94,6 +95,9 @@ export default class Primitive extends Object3D {
       case 'meshLambertMaterial':
         mat = new MeshLambertMaterial(matConf)
         mat.side = 2
+        break
+      case 'RawShaderMaterial':
+        mat = new RawShaderMaterial(matConf)
         break
       default:
         break

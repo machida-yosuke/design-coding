@@ -42,7 +42,7 @@ export default class Engine {
   }
 
   camera() {
-    if (this.cameraType === 'perspectiveCamera') this.camera = new PerspectiveCamera(45, this.width / this.height, 0.1, 100)
+    if (this.cameraType === 'perspectiveCamera') this.camera = new PerspectiveCamera(45, this.width / this.height, 0.1, 1000)
     if (this.cameraType === 'orthographicCamera') this.camera = new OrthographicCamera(-this.width * this.orthographicCameraSize, this.width * this.orthographicCameraSize, this.height * this.orthographicCameraSize, -this.height * this.orthographicCameraSize, 0.001, 1000)
     this.camera.position.set(0, 0, 10)
     this.camera.lookAt(new Vector3(0, 0, 0))
