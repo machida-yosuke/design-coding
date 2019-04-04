@@ -7,19 +7,20 @@
   "scripts": {
     "sheet": "node tool/sheetloder.js",
     "devHttps": "node server/index.js",
-    "dev": "nuxt",
+    "dev": "yarn sheet && nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "gene": "yarn sheet && nuxt generate",
-    "generate:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt generate",
+    "generate:gh-pages": "yarn sheet && DEPLOY_ENV=GH_PAGES nuxt generate",
     "deploy:gh-pages": "gh-pages -d dist -t",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "precommit": "npm run lint",
-    "build:w-gh-pages": "cross-env DEPLOY_ENV=GH_PAGES nuxt build",
-    "generate:w-gh-pages": "cross-env DEPLOY_ENV=GH_PAGES nuxt generate"
+    "build:w-gh-pages": "yarn sheet && cross-env DEPLOY_ENV=GH_PAGES nuxt build",
+    "generate:w-gh-pages": "yarn sheet && cross-env DEPLOY_ENV=GH_PAGES nuxt generate"
   },
   "dependencies": {
     "@nuxtjs/google-analytics": "^2.1.0",
+    "glsl-shader-loader": "^0.1.6",
     "nuxt": "^2.3.4",
     "nuxt-user-agent": "^1.0.2",
     "reset.css": "^2.0.2",

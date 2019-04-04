@@ -26,7 +26,7 @@ const COLORS = {
 }
 const colorLen = Object.keys(COLORS).length
 
-export default class IntroductionDemo extends Engine {
+export default class PrmitiveGraphic extends Engine {
   constructor(opts) {
     super(opts.canvas, {
       isOrbitControls: false,

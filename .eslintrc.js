@@ -7,6 +7,9 @@ module.exports = {
   parserOptions: {
     parser: 'babel-eslint'
   },
+  globals: {
+    OIMO: true
+  },
   extends: ['@nuxtjs'],
   // add your custom rules here
   rules: {

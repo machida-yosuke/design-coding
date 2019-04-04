@@ -3,7 +3,8 @@ import {
   Scene,
   PerspectiveCamera,
   OrthographicCamera,
-  Vector3
+  Vector3,
+  Clock
 } from 'three'
 import { TweenMax } from 'gsap'
 import setOrbitControls from './setOrbitControls'
@@ -18,6 +19,8 @@ export default class Engine {
     fps = 60
   }) {
     TweenMax.ticker.fps(fps)
+    this.clock = new Clock()
+    this.delta = 0
     this.cameraType = cameraType
     this.orthographicCameraSize = orthographicCameraSize
     this.canvas = canvas
@@ -28,7 +31,7 @@ export default class Engine {
     window.addEventListener('resize', this.resize)
     window.addEventListener('orientationchange', this.resize)
     this.devicePixelRatio = window.devicePixelRatio ? Math.min(1.6, window.devicePixelRatio) : 1
-    this.devicePixelRatio = 1
+    // this.devicePixelRatio = 1
     this.renderer = new WebGLRenderer({ antialias: true, alpha: true, canvas: this.canvas })
     this.renderer.setPixelRatio(this.devicePixelRatio)
     this.renderer.setClearColor(0x000000, 0)
@@ -42,7 +45,7 @@ export default class Engine {
   }
 
   camera() {
-    if (this.cameraType === 'perspectiveCamera') this.camera = new PerspectiveCamera(45, this.width / this.height, 0.1, 100)
+    if (this.cameraType === 'perspectiveCamera') this.camera = new PerspectiveCamera(45, this.width / this.height, 0.1, 1000)
     if (this.cameraType === 'orthographicCamera') this.camera = new OrthographicCamera(-this.width * this.orthographicCameraSize, this.width * this.orthographicCameraSize, this.height * this.orthographicCameraSize, -this.height * this.orthographicCameraSize, 0.001, 1000)
     this.camera.position.set(0, 0, 10)
     this.camera.lookAt(new Vector3(0, 0, 0))
@@ -63,7 +66,8 @@ export default class Engine {
   }
 
   render() {
-    this.controls.update()
+    // this.controls.update()
+    this.delta = this.clock.getDelta()
     this.renderer.render(this.scene, this.camera)
   }
 

@@ -13,7 +13,8 @@ const sheetdate = {
       day: 'day',
       title: 'title',
       description: 'description',
-      ogp: 'ogp'
+      ogp: 'ogp',
+      query: 'query'
     }
   }
 }

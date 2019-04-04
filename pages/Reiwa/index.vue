@@ -1,13 +1,13 @@
 <template lang="pug">
-  .sketch
-    canvas.sketch-canvas(ref='sketchCanvas')
+.sketch
+  canvas.sketch-canvas(ref='sketchCanvas')
 </template>
 
 <script>
 import Meta from '~/assets/mixins/meta'
-import PrmitiveGraphic from '~/assets/js/PrmitiveGraphic/PrmitiveGraphic'
+import Reiwa from '~/assets/js/Reiwa/Reiwa'
 import getSkechData from '~/assets/js/utils/getSkechData'
-const name = 'PrmitiveGraphic'
+const name = 'Reiwa'
 const sketchData = getSkechData(name)
 export default {
   mixins: [Meta],
@@ -23,13 +23,15 @@ export default {
     }
   },
   mounted() {
-    this.sketch = new PrmitiveGraphic({
+    this.sketch = new Reiwa({
       canvas: this.$refs.sketchCanvas
     })
     this.sketch.start()
   },
   beforeDestroy() {
     this.sketch.destroy()
+  },
+  methods: {
   }
 }
 </script>
@@ -38,11 +40,13 @@ export default {
 .sketch{
   top: 0;
   left: 0;
-  width: 100vw;
-  min-width: 1000px;
   height: 100vh;
-  min-height: 500px;
+  width: 100vw;
   position: relative;
+  &[data-ua='pc']{
+    min-width: 1000px;
+    min-height: 500px;
+  }
   &-canvas{
     position: absolute;
     width: 100% !important;
