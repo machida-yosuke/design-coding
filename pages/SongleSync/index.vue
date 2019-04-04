@@ -23,6 +23,10 @@ export default {
   mixins: [Meta],
   data() {
     return {
+      deviceType: 'smartphone',
+      isShowBeat: 1,
+      isShowDot: 0,
+      isShowCanvas: 1,
       meta: {
         title: `DesignCoding | ${sketchData.title}`,
         description: `${sketchData.description}`,
