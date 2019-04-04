@@ -6,17 +6,19 @@
 <script>
 import Meta from '~/assets/mixins/meta'
 import Reiwa from '~/assets/js/Reiwa/Reiwa'
+import getSkechData from '~/assets/js/utils/getSkechData'
 const name = 'Reiwa'
+const sketchData = getSkechData(name)
 export default {
   mixins: [Meta],
   data() {
     return {
       meta: {
-        title: `DesignCoding | ${name}`,
-        description: 'Reiwa is a creative challenge. My aim is to attempt to creative coding.',
+        title: `DesignCoding | ${sketchData.title}`,
+        description: `${sketchData.description}`,
         type: 'article',
-        url: `https://machida-yosuke.github.io/design-coding/${name}/`,
-        image: `https://machida-yosuke.github.io/img/ogp/${name}/ogp.png`
+        url: `https://machida-yosuke.github.io/design-coding/${sketchData.title}/`,
+        image: `https://example.com/img/ogp/${sketchData.title}/ogp.png`
       }
     }
   },

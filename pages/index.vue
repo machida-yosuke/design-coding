@@ -17,22 +17,25 @@
           p.about-description__line Create By Machida Yosuke.
         .about-logo
         .about-sns
-          a.about-sns__twitter(href="https://twitter.com/machida_yousuke?lang=ja")
-          a.about-sns__github(href="https://github.com/machida-yosuke")
-    .skech-wrap
-      canvas.skech-wrap-index(v-for='data,index in skechData' :data-index-num='index')
+          a.about-sns__twitter(href="https://twitter.com/machida_yousuke?lang=ja" target='_blank')
+          a.about-sns__github(href="https://github.com/machida-yosuke/design-coding" target='_blank')
+    .sketch-wrap
+      .sketch-index-wrap(v-for='data,index in sketchData')
+        nuxt-link.sketch-link(:to='data.title + "/" + data.query')
+          canvas.sketch-index-canvas(:data-name='data.title' ref='sketchIndexCanvas')
 </template>
 
 <script>
-import IntroductionDemo from '~/assets/js/introduction/IntroductionDemo'
-import skechData from '~/assets/json/DesignCoding.json'
+import PrmitiveGraphic from '~/assets/js/PrmitiveGraphic/PrmitiveGraphic'
+import SketchIndex from '~/assets/js/Top/SketchIndex'
+import sketchData from '~/assets/json/DesignCoding.json'
 import Meta from '~/assets/mixins/meta'
 
 export default {
   mixins: [Meta],
   data() {
     return {
-      skechData: skechData,
+      sketchData: sketchData,
       meta: {
         title: 'DesignCoding',
         description: 'DesignCoding is a creative challenge. My aim is to attempt to creative coding.',
@@ -43,39 +46,52 @@ export default {
     }
   },
   mounted() {
-    this.sketch = new IntroductionDemo({
+    this.sketch = new PrmitiveGraphic({
       canvas: this.$refs.sketchCanvas
     })
     this.sketch.start()
+
+    this.$refs.sketchIndexCanvas.forEach((element) => {
+      this.sketchIndex = new SketchIndex({
+        canvas: element
+      })
+      this.sketchIndex.start()
+    })
   },
   beforeDestroy() {
     this.sketch.destroy()
+    this.sketchIndex.destroy()
   }
 }
 </script>
 <style lang="scss">
+
+.top{
+  top: 0;
+  left: 0;
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
+}
 .introduction{
   top: 0;
   left: 0;
   width: 100vw;
-  min-width: 1000px;
   height: 100vh;
-  min-height: 500px;
   position: relative;
   .sketch{
     top: 0;
     left: 0;
     width: 100vw;
-    min-width: 1000px;
     height: 100vh;
-    min-height: 500px;
     position: relative;
     &-canvas{
       position: absolute;
       width: 100% !important;
       height: 100% !important;
       top: 0;
-      left: 0;
+      left: 50%;
+      transform: translateX(-50%);
     }
   }
   &-scroll{
@@ -175,17 +191,33 @@ export default {
     margin-left:18px;
   }
 }
-.skech-wrap{
+.sketch-wrap{
   background: #000;
   display: grid;
   grid-auto-rows:18.7vw;
   grid-template-columns:33.3vw 33.3vw 33.4vw;
 }
 
-.skech-wrap-index{
-  width:100%;
-  height: 100%;
-  background-size: cover;
+.sketch-index-wrap{
+  position: relative;
+  top:0;
+  left: 0;
+}
+
+.sketch-link{
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.sketch-index-canvas{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 </style>

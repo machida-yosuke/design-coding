@@ -6,19 +6,20 @@
 <script>
 import Meta from '~/assets/mixins/meta'
 import Smash from '~/assets/js/Smash/Smash'
+import getSkechData from '~/assets/js/utils/getSkechData'
 const name = 'Smash'
+const sketchData = getSkechData(name)
 export default {
   mixins: [Meta],
   data() {
     return {
       meta: {
-        title: `DesignCoding | ${name}`,
-        description: 'Smash is a creative challenge. My aim is to attempt to creative coding.',
+        title: `DesignCoding | ${sketchData.title}`,
+        description: `${sketchData.description}`,
         type: 'article',
-        url: `https://machida-yosuke.github.io/design-coding/${name}/`,
-        image: `https://machida-yosuke.github.io/img/ogp/${name}/ogp.png`
-      },
-      script: [{ src: 'https://cdnjs.cloudflare.com/ajax/libs/oimo/1.0.9/oimo.min.js' }]
+        url: `https://machida-yosuke.github.io/design-coding/${sketchData.title}/`,
+        image: `https://example.com/img/ogp/${sketchData.title}/ogp.png`
+      }
     }
   },
   mounted() {

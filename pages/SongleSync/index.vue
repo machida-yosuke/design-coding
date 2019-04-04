@@ -16,20 +16,19 @@
 import Meta from '~/assets/mixins/meta'
 import SongleSyncCanvas from '~/assets/js/songleSync/SongleSyncCanvas'
 import SongleSync from '~/assets/js/songleSync/SongleSync'
+import getSkechData from '~/assets/js/utils/getSkechData'
+const name = 'SongleSync'
+const sketchData = getSkechData(name)
 export default {
   mixins: [Meta],
   data() {
     return {
-      deviceType: 'smartphone',
-      isShowBeat: 1,
-      isShowDot: 0,
-      isShowCanvas: 1,
       meta: {
-        title: 'DesignCoding | SongleSync',
-        description: 'SongleSync is a creative challenge. My aim is to attempt to creative coding.',
+        title: `DesignCoding | ${sketchData.title}`,
+        description: `${sketchData.description}`,
         type: 'article',
-        url: 'https://machida-yosuke.github.io/design-coding/SongleSync/',
-        image: 'https://machida-yosuke.github.io/img/ogp/SongleSync/ogp.png'
+        url: `https://machida-yosuke.github.io/design-coding/${sketchData.title}/`,
+        image: `https://example.com/img/ogp/${sketchData.title}/ogp.png`
       }
     }
   },
