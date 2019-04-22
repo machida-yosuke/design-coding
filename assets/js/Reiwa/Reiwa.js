@@ -48,9 +48,18 @@ export default class Reiwa extends Engine {
 
   mousemove(e) {
     if (!this.plane) return
-    this.mouse = new Vector2(e.clientX / this.width, e.clientY / this.height)
+    this.mouse = new Vector2(e.offsetX, e.offsetY)
     this.plane.children[0].material.uniforms.uMouse.value = this.mouse
-    console.log(this.mouse)
+  }
+
+  resize() {
+    this.width = this.canvas.offsetWidth
+    this.height = this.canvas.offsetHeight
+    this.renderer.setSize(this.width, this.height)
+    this.camera.updateProjectionMatrix()
+    if (!this.plane) return
+    console.log(this.width, this.height, 'resize')
+    this.plane.children[0].material.uniforms.uResolution.value = [this.width, this.height]
   }
 
   render() {

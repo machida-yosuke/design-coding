@@ -40,13 +40,9 @@ export default {
 .sketch{
   top: 0;
   left: 0;
-  height: 100vh;
-  width: 100vw;
-  position: relative;
-  &[data-ua='pc']{
-    min-width: 1000px;
-    min-height: 500px;
-  }
+  height: 100%;
+  width: 100%;
+  position: fixed;
   &-canvas{
     position: absolute;
     width: 100% !important;
