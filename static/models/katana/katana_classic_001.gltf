@@ -1,0 +1,208 @@
+{
+    "accessors" : [
+        {
+            "bufferView" : 0,
+            "componentType" : 5123,
+            "count" : 15705,
+            "max" : [
+                4606
+            ],
+            "min" : [
+                0
+            ],
+            "type" : "SCALAR"
+        },
+        {
+            "bufferView" : 1,
+            "componentType" : 5126,
+            "count" : 4607,
+            "max" : [
+                29.01227569580078,
+                4.448408126831055,
+                7.083415985107422
+            ],
+            "min" : [
+                -4.444450378417969,
+                -4.536623001098633,
+                -34.12731170654297
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 2,
+            "componentType" : 5126,
+            "count" : 4607,
+            "max" : [
+                0.9924619197845459,
+                0.9999987483024597,
+                0.999755859375
+            ],
+            "min" : [
+                -0.9967955350875854,
+                -0.999969482421875,
+                -0.99993896484375
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 3,
+            "componentType" : 5126,
+            "count" : 4607,
+            "max" : [
+                1.0,
+                1.0,
+                0.9997708201408386,
+                1.0
+            ],
+            "min" : [
+                -0.9999956488609314,
+                -1.0,
+                -0.9997618794441223,
+                -1.0
+            ],
+            "type" : "VEC4"
+        },
+        {
+            "bufferView" : 4,
+            "componentType" : 5126,
+            "count" : 4607,
+            "max" : [
+                0.7977569699287415,
+                0.9873034097254276
+            ],
+            "min" : [
+                0.012026701122522354,
+                0.0048274993896484375
+            ],
+            "type" : "VEC2"
+        }
+    ],
+    "asset" : {
+        "generator" : "Khronos Blender glTF 2.0 exporter",
+        "version" : "2.0"
+    },
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 31410,
+            "byteOffset" : 0,
+            "target" : 34963
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 55284,
+            "byteOffset" : 31412,
+            "target" : 34962
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 55284,
+            "byteOffset" : 86696,
+            "target" : 34962
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 73712,
+            "byteOffset" : 141980,
+            "target" : 34962
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 36856,
+            "byteOffset" : 215692,
+            "target" : 34962
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 252548,
+            "uri" : "katana_classic_001.bin"
+        }
+    ],
+    "images" : [
+        {
+            "name" : "katana_classic_01",
+            "uri" : "katana_classic_01.png"
+        },
+        {
+            "name" : "katana_classic_01_Norm",
+            "uri" : "katana_classic_01_Norm.png"
+        }
+    ],
+    "materials" : [
+        {
+            "name" : "\u30de\u30c6\u30ea\u30a2\u30eb",
+            "normalTexture" : {
+                "index" : 1
+            },
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.6400000190734865,
+                    0.6400000190734865,
+                    0.6400000190734865,
+                    1.0
+                ],
+                "baseColorTexture" : {
+                    "index" : 0
+                },
+                "metallicFactor" : 0.0
+            }
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "Plane.001",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "NORMAL" : 2,
+                        "POSITION" : 1,
+                        "TANGENT" : 3,
+                        "TEXCOORD_0" : 4
+                    },
+                    "indices" : 0,
+                    "material" : 0
+                }
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "mesh" : 0,
+            "name" : "sword",
+            "rotation" : [
+                0.03492318093776703,
+                0.03492318093776703,
+                -0.7062438130378723,
+                0.7062439322471619
+            ],
+            "scale" : [
+                0.061345480382442474,
+                0.061345480382442474,
+                0.20857463777065277
+            ]
+        }
+    ],
+    "samplers" : [
+        {}
+    ],
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                0
+            ]
+        }
+    ],
+    "textures" : [
+        {
+            "sampler" : 0,
+            "source" : 0
+        },
+        {
+            "sampler" : 0,
+            "source" : 1
+        }
+    ]
+}
