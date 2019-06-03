@@ -16,7 +16,11 @@ export default class Engine {
     isOrbitControls = true,
     cameraType = 'perspectiveCamera',
     orthographicCameraSize = 0.0025,
-    fps = 60
+    fps = 60,
+    fixedSize = {
+      width: 0,
+      height: 0
+    }
   }) {
     TweenMax.ticker.fps(fps)
     this.clock = new Clock()
@@ -26,6 +30,8 @@ export default class Engine {
     this.canvas = canvas
     this.width = this.canvas.offsetWidth
     this.height = this.canvas.offsetHeight
+    this.fixedSize = fixedSize
+    this.setFixedSize()
     this.update = this.update.bind(this)
     this.resize = this.resize.bind(this)
     window.addEventListener('resize', this.resize)
@@ -66,7 +72,6 @@ export default class Engine {
   }
 
   render() {
-    // this.controls.update()
     this.delta = this.clock.getDelta()
     this.renderer.render(this.scene, this.camera)
   }
@@ -80,10 +85,16 @@ export default class Engine {
     TweenMax.ticker.removeEventListener('tick', this.render)
   }
 
+  setFixedSize() {
+    if (this.fixedSize.width === 0 || this.fixedSize.height === 0) return
+    this.width = this.fixedSize.width
+    this.height = this.fixedSize.height
+  }
+
   resize() {
     this.width = this.canvas.offsetWidth
     this.height = this.canvas.offsetHeight
-
+    this.setFixedSize()
     if (this.cameraType === 'perspectiveCamera') {
       this.camera.aspect = this.width / this.height
     }
