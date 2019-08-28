@@ -31,7 +31,7 @@ export default class PrmitiveGraphic extends Engine {
     super(opts.canvas, {
       isOrbitControls: false,
       cameraType: 'orthographicCamera',
-      orthographicCameraSize: 0.003,
+      orthographicCameraSize: 300,
       fps: 30
     })
     this.createFloor()
@@ -50,6 +50,8 @@ export default class PrmitiveGraphic extends Engine {
     this.createRing()
     this.createTriangular()
     this.createLight()
+    // this.scene.position.z = 100
+    // this.camera.position.z = -100
     this.camera.position.x = 10
     this.camera.position.y = 2
   }

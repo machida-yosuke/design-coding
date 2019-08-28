@@ -197,6 +197,7 @@ export default class SongleSyncCanvas extends Engine {
   }
 
   render() {
+    console.log('songle')
     this.controls.update()
     this.renderer.render(this.scene, this.camera)
   }

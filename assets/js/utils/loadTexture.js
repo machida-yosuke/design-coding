@@ -1,10 +1,10 @@
 import {
   TextureLoader
 } from 'three'
-export default function loadTexture(name, fileType) {
+export default function loadTexture({ path, name }) {
   const textuerLoader = new TextureLoader()
   return new Promise((resolve) => {
-    textuerLoader.load(`img/sketch/${name}.${fileType}`, (textuer) => {
+    textuerLoader.load(require(`~/assets/image/${path}/${name}`), (textuer) => {
       resolve(textuer)
     },
     undefined,

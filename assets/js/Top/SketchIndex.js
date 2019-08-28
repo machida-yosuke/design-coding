@@ -22,8 +22,12 @@ export default class SketchIndex extends Engine {
   }
 
   async createPlane() {
-    this.texture = await loadTexture(this.txetureName, 'png')
-    console.log(this.texture, 'this.texture')
+    this.texture = await loadTexture(
+      { path: 'sketch',
+        name: `${this.txetureName}.png`
+      }
+    )
+
     const geomConf = {
       width: 2,
       height: 2,
@@ -40,6 +44,7 @@ export default class SketchIndex extends Engine {
       vertexShader,
       fragmentShader
     })
+
     this.plane = new Primitive(
       'plane',
       'RawShaderMaterial',
@@ -48,6 +53,7 @@ export default class SketchIndex extends Engine {
         matConf
       }
     )
+
     this.plane.frustumCulled = false
     this.add(this.plane)
   }

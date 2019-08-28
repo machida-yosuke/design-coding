@@ -7,7 +7,7 @@
   "scripts": {
     "sheet": "node tool/sheetloder.js",
     "devHttps": "node server/index.js",
-    "dev": "yarn sheet && nuxt",
+    "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "gene": "yarn sheet && nuxt generate",

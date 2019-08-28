@@ -39,7 +39,7 @@ export default {
   mounted() {
     const deviceType = this.$ua.deviceType()
     this.deviceType = deviceType
-    console.log(this.deviceType)
+
     this.beat = (e) => {
       console.log(e, 'beat')
       this.sketch.tweenBeat(e)

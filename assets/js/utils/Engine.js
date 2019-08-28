@@ -20,6 +20,17 @@ export default class Engine {
     fixedSize = {
       width: 0,
       height: 0
+    },
+    orbitOpts = {
+      enableDamping: true,
+      dampingFactor: 1,
+      enableZoom: false,
+      maxDistance: 10,
+      minDistance: 1,
+      minAzimuthAngle: -30,
+      maxAzimuthAngle: 45,
+      minPolarAngle: 45,
+      maxPolarAngle: 135
     }
   }) {
     TweenMax.ticker.fps(fps)
@@ -45,20 +56,41 @@ export default class Engine {
     this.renderer.shadowMap.enabled = true
     this.renderer.shadowMap.type = 1
     this.scene = new Scene()
+
+    this.orbitOpts = orbitOpts
+    this.isOrbitControls = isOrbitControls
+
     this.camera()
-    this.orbitControl(isOrbitControls)
+    this.orbitControl()
     this.resize()
   }
 
   camera() {
-    if (this.cameraType === 'perspectiveCamera') this.camera = new PerspectiveCamera(45, this.width / this.height, 0.1, 1000)
-    if (this.cameraType === 'orthographicCamera') this.camera = new OrthographicCamera(-this.width * this.orthographicCameraSize, this.width * this.orthographicCameraSize, this.height * this.orthographicCameraSize, -this.height * this.orthographicCameraSize, 0.001, 1000)
+    if (this.cameraType === 'perspectiveCamera') {
+      this.camera = new PerspectiveCamera(45, this.width / this.height, 0.1, 1000)
+    }
+    if (this.cameraType === 'orthographicCamera') {
+      this.camera = new OrthographicCamera(
+        this.width / -this.orthographicCameraSize,
+        this.width / this.orthographicCameraSize,
+        this.height / this.orthographicCameraSize,
+        this.height / -this.orthographicCameraSize,
+        -10000,
+        10000
+      )
+    }
+
     this.camera.position.set(0, 0, 10)
     this.camera.lookAt(new Vector3(0, 0, 0))
   }
 
-  orbitControl(isOrbitControls) {
-    this.controls = setOrbitControls(this.camera, this.renderer, isOrbitControls)
+  orbitControl() {
+    this.controls = setOrbitControls(
+      this.camera,
+      this.renderer,
+      this.isOrbitControls,
+      this.orbitOpts
+    )
   }
 
   add(object) {
@@ -100,10 +132,10 @@ export default class Engine {
     }
 
     if (this.cameraType === 'orthographicCamera') {
-      this.camera.left = -this.width * this.orthographicCameraSize
-      this.camera.right = this.width * this.orthographicCameraSize
-      this.camera.top = this.height * this.orthographicCameraSize
-      this.camera.bottom = -this.height * this.orthographicCameraSize
+      this.camera.left = -this.width / this.orthographicCameraSize
+      this.camera.right = this.width / this.orthographicCameraSize
+      this.camera.top = this.height / this.orthographicCameraSize
+      this.camera.bottom = -this.height / this.orthographicCameraSize
     }
     this.renderer.setSize(this.width, this.height)
     this.camera.updateProjectionMatrix()
