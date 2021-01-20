@@ -45,7 +45,7 @@
     "eslint-plugin-promise": ">=4.0.1",
     "eslint-plugin-standard": ">=4.0.0",
     "eslint-plugin-vue": "^5.0.0",
-    "gsap": "^2.1.1",
+    "gsap": "^3.6.0",
     "node-sass": "^4.11.0",
     "nodemon": "^1.18.9",
     "nuxt-sass-resources-loader": "^2.0.5",
