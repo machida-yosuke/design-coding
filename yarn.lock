@@ -7130,9 +7130,9 @@ three-orbitcontrols@^2.101.1:
   version "2.101.1"
   resolved "https://registry.yarnpkg.com/three-orbitcontrols/-/three-orbitcontrols-2.101.1.tgz#5361507eb78b1c509b26a90489456a35a923ec26"
 
-three@^0.101.1:
-  version "0.101.1"
-  resolved "https://registry.yarnpkg.com/three/-/three-0.101.1.tgz#e7681ef52f4e572cb84f307f16f540c457030ec6"
+three@^0.137.0:
+  version "0.137.0"
+  resolved "https://registry.yarnpkg.com/three/-/three-0.137.0.tgz#0ebd6ba66637a332c31f234bcdd35aeec071a6e3"
 
 through2@^2.0.0:
   version "2.0.5"
