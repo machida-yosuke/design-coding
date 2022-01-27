@@ -28,7 +28,7 @@
     "songle-api": "^1.1.2",
     "style-loader": "^0.23.1",
     "terser": "^3.14.1",
-    "three": "^0.101.1"
+    "three": "^0.137.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^0.0.1",
